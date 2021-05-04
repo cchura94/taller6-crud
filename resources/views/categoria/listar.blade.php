@@ -1,12 +1,25 @@
+@extends("layouts.base")
+
+@section("contenido")
+
 <h1>Lista Categoria</h1>
 
-<a href="/categoria/crear">Nueva Categoria</a>
+<a href="/categoria/crear" class="btn btn-primary">Nueva Categoria</a>
 
 <form action="/categoria" method="get">
-    <input type="text" name="buscar">
-     <input type="submit" value="buscar">
+<div class="row">
+    <div class="col-md-8">
+    <input type="text" name="buscar" class="form-control">
+    </div>
+    <div class="col-md-4">
+    <input type="submit" value="buscar" class="btn btn-warning">
+    </div>
+
+</div>
+    
+     
 </form>
-<table border=1>
+<table class="table table-hover table-striped">
     <tr>
         <td>ID</td>
         <td>NOMBRE</td>
@@ -20,15 +33,42 @@
         <td>{{ $cat->nombre }}</td>
         <td>{{ $cat->detalle }}</td>
         <td>
-            <a href="/categoria/{{ $cat->id }}">Mostrar</a>
-            <a href="/categoria/{{ $cat->id }}/editar">Editar</a>
+            <a href="/categoria/{{ $cat->id }}" class="btn btn-success">Mostrar</a>
+            <a href="/categoria/{{ $cat->id }}/editar" class="btn btn-warning">Editar</a>
 
-            <form action="/categoria/{{ $cat->id }}" method="post">
+            
+
+            <!-- Button trigger modal -->
+<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#Modal{{ $cat->id }}">
+  eliminar
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="Modal{{ $cat->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ELIMINAR CATEGORIA</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ¿Está seguro de eliminar la categoria {{ $cat->nombre }}?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <form action="/categoria/{{ $cat->id }}" method="post">
                 @csrf
                 @method("DELETE")
-                <input type="submit" value="eliminar">
+                <input type="submit" value="eliminar" class="btn btn-danger">
             </form>
+      </div>
+    </div>
+  </div>
+</div>
         </td>
     </tr>
 @endforeach
 </table>
+
+
+@endsection

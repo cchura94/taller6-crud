@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Curso;
+use App\Models\Categoria;
 
 class CursoController extends Controller
 {
@@ -13,7 +15,8 @@ class CursoController extends Controller
      */
     public function index()
     {
-        return view("curso.listar");
+        $listacursos = Curso::paginate(15);
+        return view("curso.listar", compact("listacursos"));
     }
 
     /**
@@ -23,7 +26,8 @@ class CursoController extends Controller
      */
     public function create()
     {
-        return view("curso.crear");
+        $categorias = Categoria::All();
+        return view("curso.crear", compact('categorias'));
     }
 
     /**
@@ -34,7 +38,18 @@ class CursoController extends Controller
      */
     public function store(Request $request)
     {
-        return $request;
+        // validar
+
+        //guardar
+        $curso = new Curso;
+        $curso->nombre = $request->nombre;
+        $curso->capacidad = $request->capacidad;
+        $curso->precio = $request->precio;
+        $curso->categoria_id = $request->categoria_id;
+        $curso->detalle = $request->detalle;
+        $curso->save();
+
+        return redirect("/curso")->with("mensaje", "Curso registrado");
     }
 
     /**
