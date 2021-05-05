@@ -8,6 +8,9 @@ use App\Models\Categoria;
 
 class CursoController extends Controller
 {
+    public function __construct() {
+       // $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +18,7 @@ class CursoController extends Controller
      */
     public function index()
     {
+        
         $listacursos = Curso::paginate(15);
         return view("curso.listar", compact("listacursos"));
     }

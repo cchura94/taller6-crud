@@ -9,6 +9,8 @@
 <a href="{{ route('curso.create') }}" class="btn btn-info">Nuevo Curso 2</a> |
 <a href="{{ url('/curso/create') }}" class="btn btn-info"> Nuevo Curso 3</a>
 
+@auth
+    // verdad
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -32,4 +34,8 @@
     </tbody>
 
 </table>
+
+@else
+   <h1>No puedes ver los datos (Inicia sesion)</h1>
+@endauth
 @endsection
